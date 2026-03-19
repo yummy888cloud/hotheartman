@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>暖男安慰話語製造機</title>
+  <style>
+    :root {
+      --bg1: #fff7fb;
+      --bg2: #fffdf8;
+      --card: rgba(255,255,255,0.88);
+      --text: #473b47;
+      --sub: #7a6677;
+      --pink: #f58bb2;
+      --pink-deep: #ea5d93;
+      --rose: #ffe1ea;
+      --yellow: #fff1b8;
+      --mint: #dff7ef;
+      --blue: #e2f0ff;
+      --shadow: 0 16px 40px rgba(229, 154, 187, 0.18);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fff7fb 0%, #fffdf8 45%, #fff5f8 100%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow);
+      border-radius: 34px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.5fr 0.9fr;
+      gap: 20px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(245,139,178,0.22), rgba(245,139,178,0));
+      border-radius: 50%;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #fff0f6;
+      color: var(--pink-deep);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      color: var(--sub);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .hero-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-bubble {
+      width: 100%;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #fff0f6, #fff7cf);
+      padding: 20px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7);
+      text-align: center;
+    }
+
+    .hero-bubble .emoji {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    .hero-bubble strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .hero-bubble span {
+      display: block;
+      color: var(--sub);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.15fr;
+      gap: 22px;
+      margin-top: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.65);
+      backdrop-filter: blur(10px);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 24px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--sub);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #f1d7e1;
+      border-radius: 16px;
+      padding: 14px 15px;
+      font-size: 15px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      transition: 0.2s ease;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #f3a5c3;
+      box-shadow: 0 0 0 4px rgba(245, 139, 178, 0.12);
+    }
+
+    .chips {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .chip, .toggle, .btn, .small-btn {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .chip {
+      padding: 13px 14px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid #f0e3e8;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .chip:hover, .toggle:hover, .btn:hover, .small-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .chip.active {
+      background: #fff0f6;
+      border-color: #f3a5c3;
+      color: var(--pink-deep);
+      box-shadow: 0 10px 20px rgba(245,139,178,0.10);
+    }
+
+    .toggles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .toggle {
+      border-radius: 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #f0e3e8;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .toggle.active-green {
+      background: var(--mint);
+      border-color: #b2ead5;
+      color: #257157;
+    }
+
+    .toggle.active-blue {
+      background: var(--blue);
+      border-color: #c8dfff;
+      color: #2b5f99;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(245,139,178,0.16);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f58bb2, #ee6ea0);
+      color: #fff;
+    }
+
+    .btn-soft {
+      background: #fff0f6;
+      color: var(--pink-deep);
+    }
+
+    .result-card {
+      background: linear-gradient(180deg, #4a3344, #382731);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.09), transparent 28%);
+      pointer-events: none;
+    }
+
+    .result-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .result-head small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #ffc9dc;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      color: #ffe3ee;
+      font-size: 13px;
+    }
+
+    .result-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .message-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .message-box .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .version {
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      color: #ffd8e5;
+    }
+
+    .small-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      color: #3d2f39;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .message-text {
+      line-height: 1.95;
+      font-size: 16px;
+      color: #fff8fb;
+      white-space: pre-wrap;
+    }
+
+    .tips {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: rgba(245,139,178,0.14);
+      color: #ffe9f2;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--sub);
+      font-size: 13px;
+      margin: 18px 0 6px;
+      line-height: 1.7;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    @media (max-width: 920px) {
+      .hero, .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 14px; }
+      .hero, .card { padding: 18px; }
+      .chips, .toggles { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <div class="tag">暖男安慰話語製造機</div>
+        <h1>嘴笨沒關係，<br>也能說出讓人被接住的話</h1>
+        <p>
+          這是一個給「不善言辭但心地善良」的人用的小網站。<br>
+          只要選情境、選口吻、按一下，就能生成自然、不油膩、真的拿去傳訊息也可以用的安慰句子。
+        </p>
+      </div>
+      <div class="hero-side">
+        <div class="hero-bubble">
+          <div class="emoji">🫶🌤️</div>
+          <strong>適合暖男男友</strong>
+          <span>不知道怎麼安慰人時，至少先說出一段溫柔又真誠的話，不會只剩「不要想太多」這種句子。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>設定情境</h2>
+
+        <div class="section">
+          <label class="label" for="name">安慰對象稱呼</label>
+          <input id="name" type="text" placeholder="例如：寶寶、小晴、妳" />
+        </div>
+
+        <div class="section">
+          <label class="label">情境</label>
+          <div class="chips" id="scenarioChips"></div>
+        </div>
+
+        <div class="section">
+          <label class="label">口吻</label>
+          <div class="chips" id="toneChips"></div>
+        </div>
+
+        <div class="section">
+          <label class="label" for="relationship">身分帶入</label>
+          <select id="relationship">
+            <option value="男友">男友</option>
+            <option value="女友">女友</option>
+            <option value="另一半" selected>另一半</option>
+            <option value="陪伴的人">陪伴的人</option>
+          </select>
+        </div>
+
+        <div class="section">
+          <label class="label">選配感覺</label>
+          <div class="toggles">
+            <button class="toggle active-green" id="praiseBtn" type="button">✓ 加入鼓勵稱讚</button>
+            <button class="toggle active-blue" id="hugBtn" type="button">✓ 加入抱抱感</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <label class="label" for="customDetail">補充一句狀況（可選）</label>
+          <textarea id="customDetail" rows="3" placeholder="例如：她今天被主管唸、下班後很低落"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="generateBtn" type="button">✨ 重新生成 3 句</button>
+          <button class="btn btn-soft" id="randomBtn" type="button">🎲 幫我亂選情境</button>
+        </div>
+      </div>
+
+      <div class="card result-card">
+        <div class="result-head">
+          <div>
+            <small>Generated Messages</small>
+            <h2 style="margin:0; font-size:28px;">安慰話語候選</h2>
+          </div>
+          <div class="pill" id="currentScenarioPill">情境：工作受挫</div>
+        </div>
+
+        <div class="result-list" id="resultList"></div>
+
+        <div class="tips" id="tipsBox">
+          小提醒：真正打動人的通常不是最華麗的句子，而是「你有沒有在乎對方」、「你有沒有留下來陪」。
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      使用方式：直接把這份檔案存成 <strong>.html</strong>，雙擊打開就能用。<br>
+      也可以丟到 GitHub Pages、Netlify，或傳給男友當專屬小工具。
+    </p>
+  </div>
+
+  <script>
+    const scenarios = {
+      work: {
+        label: "工作受挫",
+        intros: [
+          "你今天一定撐得很辛苦，",
+          "我知道你今天在工作上不好受，",
+          "感覺得出來你真的累了，"
+        ],
+        cores: [
+          "先不要急著怪自己，你已經很努力了。",
+          "不是你不夠好，只是今天真的太難了。",
+          "你願意撐到現在，已經很不容易。"
+        ],
+        endings: [
+          "回家後讓我抱一下，好嗎？",
+          "剩下的情緒，交給我陪你慢慢放下。",
+          "今天先休息，明天再一起面對。"
+        ]
+      },
+      pressure: {
+        label: "壓力很大",
+        intros: [
+          "我知道你最近扛了很多，",
+          "你不是突然變脆弱，只是真的累積太久了，",
+          "最近的你一定很有壓力，"
+        ],
+        cores: [
+          "不用什麼事都一個人撐著。",
+          "你可以先喘口氣，不需要永遠那麼堅強。",
+          "就算現在很亂，也不代表你做得不好。"
+        ],
+        endings: [
+          "有我在，你不用逞強。",
+          "你先休息，我會陪著你。",
+          "慢一點也沒關係，我不會催你。"
+        ]
+      },
+      family: {
+        label: "和家人有摩擦",
+        intros: [
+          "我知道你心裡一定很悶，",
+          "遇到家人的事，總是特別難受，",
+          "這種委屈卡在心裡真的會很重，"
+        ],
+        cores: [
+          "你已經很努力在顧全大家了。",
+          "不是所有誤解都代表你做錯了。",
+          "你的感受很重要，不需要一直忍。"
+        ],
+        endings: [
+          "先讓自己緩一緩，我在這裡。",
+          "不管你想說還是不想說，我都陪你。",
+          "今天先別勉強自己當沒事。"
+        ]
+      },
+      health: {
+        label: "身體不舒服",
+        intros: [
+          "你身體不舒服還要撐著，真的很讓人心疼，",
+          "看到你不舒服，我只想你好好休息，",
+          "你今天先不用表現得很厲害，"
+        ],
+        cores: [
+          "現在最重要的是先照顧好自己。",
+          "你可以脆弱一點，真的沒關係。",
+          "今天的你只要負責休息就好。"
+        ],
+        endings: [
+          "其他事情先放著，我陪你。",
+          "讓我照顧你一下，好嗎？",
+          "等你好一點，我們再慢慢來。"
+        ]
+      },
+      mood: {
+        label: "心情低落",
+        intros: [
+          "就算你現在什麼都不想說，",
+          "我感覺得到你心情不好，",
+          "你現在可能沒有力氣整理情緒，"
+        ],
+        cores: [
+          "也沒關係，我不會逼你馬上好起來。",
+          "難過不是麻煩，你不用怕影響我。",
+          "你可以先安靜一下，我會一直在。"
+        ],
+        endings: [
+          "等你想說的時候，我聽你說。",
+          "今天不用變得很勇敢，先被我抱一下。",
+          "你只要記得，你不是一個人。"
+        ]
+      },
+      apology: {
+        label: "對方自責內疚",
+        intros: [
+          "你先不要一直怪自己，",
+          "我知道你心裡很過意不去，",
+          "你會難受，代表你真的很在乎，"
+        ],
+        cores: [
+          "但這不代表你就是不好的人。",
+          "你已經有在反省了，不用再一直傷害自己。",
+          "願意面對的人，本來就值得被溫柔對待。"
+        ],
+        endings: [
+          "我們一起想下一步，不急著否定自己。",
+          "先抱抱自己，也讓我抱抱你。",
+          "你不是一個人在承受這些。"
+        ]
+      },
+      anxious: {
+        label: "焦慮想很多",
+        intros: [
+          "我知道你現在腦袋一定停不下來，",
+          "你不是愛想太多，只是太在乎了，",
+          "我知道你現在一定很亂，"
+        ],
+        cores: [
+          "先不要急著把所有事情一次想完。",
+          "現在先陪自己慢下來，比逼自己立刻振作更重要。",
+          "事情也許還沒那麼糟，我們一件一件來。"
+        ],
+        endings: [
+          "你先靠著我一下。",
+          "有些事今天先不用解決完。",
+          "先呼吸一下，我陪你一起整理。"
+        ]
+      }
+    };
+
+    const tones = {
+      gentle: "溫柔暖心",
+      steady: "成熟穩定",
+      cute: "有點可愛",
+      brief: "短句直接",
+      boyfriend: "直男努力版"
+    };
+
+    let state = {
+      scenario: "work",
+      tone: "gentle",
+      needPraise: true,
+      needHug: true
+    };
+
+    const scenarioChips = document.getElementById("scenarioChips");
+    const toneChips = document.getElementById("toneChips");
+    const resultList = document.getElementById("resultList");
+    const currentScenarioPill = document.getElementById("currentScenarioPill");
+    const praiseBtn = document.getElementById("praiseBtn");
+    const hugBtn = document.getElementById("hugBtn");
+    const generateBtn = document.getElementById("generateBtn");
+    const randomBtn = document.getElementById("randomBtn");
+
+    function renderChips(container, data, activeKey, onClick) {
+      container.innerHTML = "";
+      Object.entries(data).forEach(([key, value]) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "chip" + (key === activeKey ? " active" : "");
+        btn.textContent = value.label || value;
+        btn.addEventListener("click", () => onClick(key));
+        container.appendChild(btn);
+      });
+    }
+
+    function pick(arr, index, offset = 0) {
+      return arr[(index + offset) % arr.length];
+    }
+
+    function buildMessage(index) {
+      const scenarioData = scenarios[state.scenario];
+      const tone = state.tone;
+      const name = document.getElementById("name").value.trim();
+      const relationship = document.getElementById("relationship").value;
+      const customDetail = document.getElementById("customDetail").value.trim();
+
+      const intro = pick(scenarioData.intros, index, Math.floor(Math.random() * scenarioData.intros.length));
+      const core = pick(scenarioData.cores, index, Math.floor(Math.random() * scenarioData.cores.length));
+      const ending = pick(scenarioData.endings, index, Math.floor(Math.random() * scenarioData.endings.length));
+
+      let text = (name ? name + "，" : "") + intro + core + ending;
+
+      if (customDetail) {
+        const connectors = [
+          "我知道你現在是因為「" + customDetail + "」才特別難受。",
+          "我知道今天的你，是被「" + customDetail + "」弄得很累。",
+          "你會這樣低落，我知道跟「" + customDetail + "」有關。"
+        ];
+        text += " " + connectors[index % connectors.length];
+      }
+
+      if (state.needPraise) {
+        const praise = [
+          "我一直都覺得你很棒。",
+          "你比自己想像中還要勇敢。",
+          "身為" + relationship + "，我真的很心疼也很佩服你。"
+        ];
+        text += " " + praise[index % praise.length];
+      }
+
+      if (state.needHug) {
+        const hugs = [
+          "來，先給你一個抱抱。",
+          "先讓我抱一下，再慢慢說。",
+          "今天先被我好好接住。"
+        ];
+        text += " " + hugs[index % hugs.length];
+      }
+
+      if (tone === "steady") {
+        text = text
+          .replaceAll("先不要急著怪自己", "先別急著否定自己")
+          .replaceAll("今天先被我好好接住", "今天先讓自己停一下")
+          .replaceAll("好嗎？", "好嗎");
+      }
+
+      if (tone === "cute") {
+        const cuteEnd = [" 🫶", " 🌤️", " 🐻", " ✨"];
+        text += cuteEnd[index % cuteEnd.length];
+      }
+
+      if (tone === "brief") {
+        text = (name ? name + "，" : "") + core + (state.needPraise ? " 你已經很棒了。" : "") + (state.needHug ? " 我在。" : "");
+        if (customDetail) text += " 我知道你是在煩「" + customDetail + "」。";
+      }
+
+      if (tone === "boyfriend") {
+        const direct = [
+          "我可能不太會說，但我是真的很在乎你。",
+          "我嘴笨，可是我會陪你。",
+          "我不一定每句都說得漂亮，但我沒有想丟下你一個人。"
+        ];
+        text = (name ? name + "，" : "") + text + " " + direct[index % direct.length];
+      }
+
+      return text;
+    }
+
+    function renderMessages() {
+      currentScenarioPill.textContent = "情境：" + scenarios[state.scenario].label;
+      resultList.innerHTML = "";
+
+      const messages = [buildMessage(0), buildMessage(1), buildMessage(2)];
+
+      messages.forEach((msg, idx) => {
+        const box = document.createElement("div");
+        box.className = "message-box";
+        box.innerHTML = `
+          <div class="top">
+            <span class="version">版本 ${idx + 1}</span>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="small-btn" data-copy="${idx}">複製</button>
+              <button class="small-btn" data-line="${idx}">轉成 LINE 口吻</button>
+            </div>
+          </div>
+          <div class="message-text" id="msg-${idx}"></div>
+        `;
+        resultList.appendChild(box);
+        box.querySelector("#msg-" + idx).textContent = msg;
+      });
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const idx = btn.getAttribute("data-copy");
+          const text = document.getElementById("msg-" + idx).textContent;
+          try {
+            await navigator.clipboard.writeText(text);
+            const original = btn.textContent;
+            btn.textContent = "已複製";
+            setTimeout(() => btn.textContent = original, 1400);
+          } catch (e) {
+            alert("複製失敗，請手動複製文字。");
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-line]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const idx = btn.getAttribute("data-line");
+          const text = document.getElementById("msg-" + idx).textContent;
+          const lineText = convertToLineStyle(text);
+          document.getElementById("msg-" + idx).textContent = lineText;
+          btn.textContent = "已轉換";
+          setTimeout(() => btn.textContent = "轉成 LINE 口吻", 1400);
+        });
+      });
+    }
+
+    function convertToLineStyle(text) {
+      return text
+        .replaceAll("，", "\n")
+        .replaceAll("。", "。\n")
+        .replace(/\n+/g, "\n")
+        .trim() + "\n\n真的有事就跟我說，我在。";
+    }
+
+    function rerenderAll() {
+      renderChips(scenarioChips, scenarios, state.scenario, (key) => {
+        state.scenario = key;
+        rerenderAll();
+      });
+
+      renderChips(toneChips, Object.fromEntries(Object.entries(tones).map(([k,v]) => [k, { label: v }])), state.tone, (key) => {
+        state.tone = key;
+        rerenderAll();
+      });
+
+      praiseBtn.className = "toggle " + (state.needPraise ? "active-green" : "");
+      praiseBtn.textContent = state.needPraise ? "✓ 加入鼓勵稱讚" : "＋ 加入鼓勵稱讚";
+
+      hugBtn.className = "toggle " + (state.needHug ? "active-blue" : "");
+      hugBtn.textContent = state.needHug ? "✓ 加入抱抱感" : "＋ 加入抱抱感";
+
+      renderMessages();
+    }
+
+    praiseBtn.addEventListener("click", () => {
+      state.needPraise = !state.needPraise;
+      rerenderAll();
+    });
+
+    hugBtn.addEventListener("click", () => {
+      state.needHug = !state.needHug;
+      rerenderAll();
+    });
+
+    generateBtn.addEventListener("click", renderMessages);
+
+    randomBtn.addEventListener("click", () => {
+      const scenarioKeys = Object.keys(scenarios);
+      const toneKeys = Object.keys(tones);
+      state.scenario = scenarioKeys[Math.floor(Math.random() * scenarioKeys.length)];
+      state.tone = toneKeys[Math.floor(Math.random() * toneKeys.length)];
+      rerenderAll();
+    });
+
+    document.getElementById("name").addEventListener("input", renderMessages);
+    document.getElementById("relationship").addEventListener("change", renderMessages);
+    document.getElementById("customDetail").addEventListener("input", renderMessages);
+
+    rerenderAll();
+  </script>
+</body>
+</html>
